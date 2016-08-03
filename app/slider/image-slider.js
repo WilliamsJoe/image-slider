@@ -3,9 +3,17 @@ import './styles/main.styl';
 const imageSlider = document.getElementById('image-slider');
 const testAnimation = document.getElementById('test-animation');
 const click = document.getElementById('click');
-
+const imageOne = document.getElementById('image-slider-single-1');
+const imageTwo = document.getElementById('image-slider-single-1');
 const images = [{}, {}, {}];
 
+function hasClass(el, className) {
+	return el.classList.contains(className);
+}
+
+function addClass(el, className) {
+	el.classList.add(className);
+}
 
 function animationEnd() {
     let i;
@@ -28,7 +36,7 @@ function animationEnd() {
 }
 
 const endAnimation = animationEnd();
-console.log('test-animation', endAnimation);
+console.dir(imageSlider);
 testAnimation.addEventListener('animationend', () => {
 	console.log('Animation Ended');
 });
@@ -50,6 +58,7 @@ click.addEventListener('click', () => {
 });
 
 function removeElement(imageId) {
+	console.log('test-animation', testAnimation.className);
     const image = images.find(image => {
         return image.id === imageId;
     });
