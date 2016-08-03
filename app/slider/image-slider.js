@@ -49,47 +49,48 @@ const images = [{}, {}, {}];
 const slideRT = {
     DOM: {
         container: {
-            DOMElement: 2
-        },
-        imageContainer: {
-            DOMElement: 3,
-            image: {
-                DOMElement: 4
-            }
-        },
-        contentContainer: {
-            DOMElement: 5,
-            title: {
-                DOMElement: 6,
-            },
-            button: {
-                DOMElement: 7
-            }
-        },
+            DOMElement: undefined,
+            children: [{
+                imageContainer: {
+                    DOMElement: undefined,
+                    children: [{
+                        image: {
+                            DOMElement: undefined
+                        }
+                    }]
+                }
+            }, {
+                contentContainer: {
+                    DOMElement: undefined,
+                    children: [{
+                        title: {
+                            DOMElement: undefined
+                        }
+                    }, {
+                        button: {
+                            DOMElement: undefined
+                        }
+                    }]
+                }
+            }],
+
+        }
     }
 };
-Object.keys(slideRT.DOM).forEach((property) => {
-    let DOMObject = slideRT.DOM[property];
-    console.log('DOMOBject', DOMObject);
-    DOMObject['DOMElement'] = document.createElement('div');
-    console.log(DOMObject);
-    if (Object.keys(DOMObject))
-        Object.keys(slideRT.DOM[property]).forEach((childProperty) => {
 
-        });
-
-    console.log('2 typeof property', typeof slideRT.DOM[property]);
-});
-let s;
-for (s in slideRT) {
-    console.log('S', slideRT[s]);
-    console.log('TYPE OF DOM', typeof slideRT[s]);
-    if (typeof slideRT[s] === 'object') {
-        console.log('object');
-    }
+function buildDOM(obj) {
+    Object.keys(obj).forEach(property => {
+        console.log('obj----', obj[property]);
+        obj[property].DOMElement = document.createElement('div');
+        if (obj[property].children) {
+            obj[property].children.forEach(child => {
+                buildDOM(child);
+            });
+        }
+    });
 }
 
-console.log('slideRT', slideRT);
+buildDOM(slideRT.DOM);
 
 function hasClass(el, className) {
     return el.classList.contains(className);
