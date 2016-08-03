@@ -1,36 +1,50 @@
 @import './keyframes.styl';
 
+*
+  box-sizing border-box
+
 #image-slider 
   overflow hidden
   position relative
   width 800px
   
+  div:before
+  div:after
+    display: table; content: " ";
+        
+  .image-slider-hidden
+    display none
+
   img.responsive 
     width 100%
     height auto
+    
+  #image-slider-content-container
+    height 100%
+    left 0
+    padding 30px
+    position absolute
+    top 0
+    width 100%
 
-  .content-container 
-      height 100%
-      left 0
-      padding 30px
-      position absolute
-      top 0
-      width 100%
+  .image-slider-content-single-button
+    line-height 48px
+    a
+      background-color green
+      color #fff
+      padding 15px
 
   .slideInRight 
     animation slideInRight 2s
-    animation-iteration-count infinite
 
   .slideInDown 
     animation slideInDown 2s
-    animation-iteration-count infinite
 
   .slideInUp 
     animation slideInUp 2s
-    animation-iteration-count 2
 
   .fadeIn
-    animation fadeIn 2s
+    animation fadeIn 1s
   
   .fadeOut
-    animation fadeOut 2s
+    animation fadeOut 1s

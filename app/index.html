@@ -6,18 +6,23 @@
 </head>
 
 <body>
-	<div id="click">Click</div>
+    <div id="click">Click</div>
     <section id="image-slider" class="1 2 3 4">
-        <div class="image-container">
-            <div id="image-slider-single-1" data-image="1" class="slideInLeft">
-                <img class="responsive" src="http://placehold.it/600x400">
+        <div class="image-slider-outer">
+            <div class="image-slider-image-container">
+                <div id="image-slider-single-1" data-image="1" class="fadeOut">
+                    <img class="responsive" src="slider/images/image1.png">
+                </div>
+                <div id="image-slider-single-2" data-image="2" class="image-slider-hidden">
+                    <img class="responsive" src="slider/images/image1.png">
+                </div>
             </div>
-            <div data-image="2">
-                <img class="responsive" src="http://placehold.it/600x400">
+            <div id="image-slider-content-container" class="slideInUp">
+                <div class="image-slider-content-single-title">HUGE SALE</div>
+                <div class="image-slider-content-single-button">
+                    <a href="">Shop Now</a>
+                </div>
             </div>
-        </div>
-        <div id="test-animation" class="content-container slideInUp">
-            <h1>Some Content</h1>
         </div>
     </section>
     <script src="bundle.js"></script>

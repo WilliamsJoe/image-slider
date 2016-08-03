@@ -1,23 +1,112 @@
 import './styles/main.styl';
+import slides from './config';
+
+console.log('Slides', slides);
 
 const imageSlider = document.getElementById('image-slider');
-const testAnimation = document.getElementById('test-animation');
+const contentContainer = document.getElementById('image-slider-content-container');
 const click = document.getElementById('click');
 const imageOne = document.getElementById('image-slider-single-1');
-const imageTwo = document.getElementById('image-slider-single-1');
+const imageTwo = document.getElementById('image-slider-single-2');
 const images = [{}, {}, {}];
 
+// class Slides {
+// 	constructor(slides) {
+// 		this.slides = slides;
+// 		this.create();
+// 	}
+// 	create() {
+// 		this.slides.forEach((slide,index) => {
+// 			slide.id = index;
+// 			slide.DOM = {};
+// 			slide.DOM.sliderOuter = document.createElement('div');
+// 			slide.DOM.imageContainer = document.createElement('div');
+// 			slide.DOM.contentContainer = document.createElement('div');
+// 			slide.DOM.sliderOuter.setAttribute('id', index);
+// 			slide.DOM.sliderOuter.setAttribute('class', 'image-slider-single');
+// 			slide.DOM.imageContainer.innerHTML = 'INDEX:' + index;
+// 			slide.DOM.sliderOuter.appendChild(slide.DOM.imageContainer);
+
+// 			slide.DOM.container.DOMElement = document.createElement('div');
+
+// 		});
+// 	}
+// }
+
+// const newSlides = new Slides(slides);
+
+// const scopes = user.scopes;
+// let permissions = {};
+// Object.keys(scopes).forEach((property) => {
+//     permissions[property] = {};
+//     scopes[property].forEach((value) => {
+//         let action = value.split('_')
+//             .shift();
+//         permissions[property][action] = true;
+//     });
+// });
+
+const slideRT = {
+    DOM: {
+        container: {
+            DOMElement: 2
+        },
+        imageContainer: {
+            DOMElement: 3,
+            image: {
+                DOMElement: 4
+            }
+        },
+        contentContainer: {
+            DOMElement: 5,
+            title: {
+                DOMElement: 6,
+            },
+            button: {
+                DOMElement: 7
+            }
+        },
+    }
+};
+Object.keys(slideRT.DOM).forEach((property) => {
+    let DOMObject = slideRT.DOM[property];
+    console.log('DOMOBject', DOMObject);
+    DOMObject['DOMElement'] = document.createElement('div');
+    console.log(DOMObject);
+    if (Object.keys(DOMObject))
+        Object.keys(slideRT.DOM[property]).forEach((childProperty) => {
+
+        });
+
+    console.log('2 typeof property', typeof slideRT.DOM[property]);
+});
+let s;
+for (s in slideRT) {
+    console.log('S', slideRT[s]);
+    console.log('TYPE OF DOM', typeof slideRT[s]);
+    if (typeof slideRT[s] === 'object') {
+        console.log('object');
+    }
+}
+
+console.log('slideRT', slideRT);
+
 function hasClass(el, className) {
-	return el.classList.contains(className);
+    return el.classList.contains(className);
+}
+
+function removeClass(el, className) {
+    el.classList.remove(className);
 }
 
 function addClass(el, className) {
-	el.classList.add(className);
+    console.log('addClas', el, className);
+    el.classList.add(className);
 }
 
 function animationEnd() {
     let i;
-	const temp = document.createElement('temp');
+    const temp = document.createElement('temp');
 
     const animations = {
         "animation": "animationend",
@@ -27,38 +116,35 @@ function animationEnd() {
     };
 
     for (i in animations) {
-    	console.log(temp.style[i]);
-    	if(temp.style[i] !== undefined) {
-    		console.log('TRUE');
-    		return animations[i];
-    	}
+        console.log(temp.style[i]);
+        if (temp.style[i] !== undefined) {
+            console.log('TRUE');
+            return animations[i];
+        }
     }
 }
 
 const endAnimation = animationEnd();
 console.dir(imageSlider);
-testAnimation.addEventListener('animationend', () => {
-	console.log('Animation Ended');
+contentContainer.addEventListener('animationend', () => {
+    console.log('Animation Ended');
 });
 
-images.forEach((image, index) => {
-    image.element = document.createElement('div');
-    image.id = index;
-    image.element.setAttribute('id', 'image-slider-single-' + index);
-    image.element.setAttribute('class', 'image-slider-single');
-    image.element.setAttribute('data-image', index);
-    image.element.innerHTML = index;
-});
+// imageOne.addEventListener('animationend', () => {
+// 	console.log('Animation Ended 2');
+// 	addClass(imageOne, 'image-slider-hidden');
+// 	removeClass(imageTwo, 'image-slider-hidden');
+// 	addClass(imageTwo, 'fadeIn');
+// });
 
 click.addEventListener('click', () => {
-    images.forEach(image => {
-        imageSlider.appendChild(image.element);
+    newSlides.slides.forEach(slide => {
+        imageSlider.appendChild(slide.DOM.sliderOuter);
     });
-    removeElement(2);
 });
 
 function removeElement(imageId) {
-	console.log('test-animation', testAnimation.className);
+    console.log('test-animation', contentContainer.className);
     const image = images.find(image => {
         return image.id === imageId;
     });
