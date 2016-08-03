@@ -1,0 +1,10 @@
+.DS_STORE
+*.swp
+node_modules
+npm-debug.log
+.idea
+terminal.glue
+.jshintrc
+.jsbeautifyrc
+.old
+
