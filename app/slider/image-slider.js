@@ -18,11 +18,8 @@ const images = [{}, {}, {}];
 // 	create() {
 // 		this.slides.forEach((slide,index) => {
 // 			slide.id = index;
-// 			slide.DOM = {};
-// 			slide.DOM.sliderOuter = document.createElement('div');
-// 			slide.DOM.imageContainer = document.createElement('div');
-// 			slide.DOM.contentContainer = document.createElement('div');
-// 			slide.DOM.sliderOuter.setAttribute('id', index);
+// 			slide.DOM = schema.DOM;
+// 			slide.DOM.container.setAttribute('id', index);
 // 			slide.DOM.sliderOuter.setAttribute('class', 'image-slider-single');
 // 			slide.DOM.imageContainer.innerHTML = 'INDEX:' + index;
 // 			slide.DOM.sliderOuter.appendChild(slide.DOM.imageContainer);
@@ -34,63 +31,50 @@ const images = [{}, {}, {}];
 // }
 
 // const newSlides = new Slides(slides);
-
-// const scopes = user.scopes;
-// let permissions = {};
-// Object.keys(scopes).forEach((property) => {
-//     permissions[property] = {};
-//     scopes[property].forEach((value) => {
-//         let action = value.split('_')
-//             .shift();
-//         permissions[property][action] = true;
-//     });
-// });
-
-const slideRT = {
-    DOM: {
-        container: {
-            DOMElement: undefined,
+const base = 'image-slider';
+const schema = {
+    DOM: [{
+        name: 'container',
+        className: 'container',
+        children: [{
+            name: 'imageContainer',
+            className: 'image-container',
             children: [{
-                imageContainer: {
-                    DOMElement: undefined,
-                    children: [{
-                        image: {
-                            DOMElement: undefined
-                        }
-                    }]
-                }
+                name: 'image'
+            }]
+        }, {
+            name: 'contentContainer',
+            className: 'content-container',
+            children: [{
+                name: 'title',
+                className: 'content-container-title'
             }, {
-                contentContainer: {
-                    DOMElement: undefined,
-                    children: [{
-                        title: {
-                            DOMElement: undefined
-                        }
-                    }, {
-                        button: {
-                            DOMElement: undefined
-                        }
-                    }]
-                }
-            }],
-
-        }
-    }
+                name: 'button',
+                className: 'content-container-button'
+            }]
+        }]
+    }]
 };
 
-function buildDOM(obj) {
-    Object.keys(obj).forEach(property => {
-        console.log('obj----', obj[property]);
-        obj[property].DOMElement = document.createElement('div');
-        if (obj[property].children) {
-            obj[property].children.forEach(child => {
-                buildDOM(child);
+function buildDOM(list) {
+    list.forEach(item => {
+        item.DOMElement = item.DOMElement ? item.DOMElement : document.createElement('div');
+        if (item.className) item.DOMElement.classList.add(base + '-' + item.className);
+        if (item.children) {
+            item.children.forEach(child => {
+                child.DOMElement = document.createElement('div');
+                item.DOMElement.appendChild(child.DOMElement);
             });
+            buildDOM(item.children);
         }
     });
 }
 
-buildDOM(slideRT.DOM);
+buildDOM(schema.DOM);
+schema.DOM.forEach(DOMObj => {
+	imageSlider.appendChild(DOMObj.DOMElement);
+});
+console.log('schema.DOM', schema.DOM);
 
 function hasClass(el, className) {
     return el.classList.contains(className);
